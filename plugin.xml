@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="Without monitor"
+            id="monitordemo.commands.noMonitorUsage">
+      </command>
+      <command
+            name="With verbose monitor in dialog"
+            id="monitordemo.commands.monitorUsage">
+      </command>
+      <command
+            name="With monitor in dialog"
+            id="monitordemo.commands.monitorUsageNoTaskName">
+      </command>
+      <command
+            name="With verbose job monitor"
+            id="monitordemo.commands.jobMonitorUsage">
+      </command>
+      <command
+            name="With job monitor"
+            id="monitordemo.commands.jobMonitorUsageNoTaskName">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="monitordemo.commands.noMonitorUsage"
+            class="monitordemo.handlers.NoMonitorUsage">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.monitorUsage"
+            class="monitordemo.handlers.UseMonitor">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.monitorUsageNoTaskName"
+            class="monitordemo.handlers.UseMonitorNoTaskName">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.jobMonitorUsage"
+            class="monitordemo.handlers.UseJobMonitor">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.jobMonitorUsageNoTaskName"
+            class="monitordemo.handlers.UseJobMonitorNoTaskName">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Monitor demos"
+               id="monitordemo.menus">
+            <command
+                  commandId="monitordemo.commands.noMonitorUsage"
+                  id="monitordemo.menus.noMonitorUsage">
+            </command>
+            <command
+                  commandId="monitordemo.commands.monitorUsage"
+                  id="monitordemo.menus.monitorUsage">
+            </command>
+            <command
+                  commandId="monitordemo.commands.monitorUsageNoTaskName"
+                  id="monitordemo.menus.monitorUsageNoTaskName">
+            </command>
+            <command
+                  commandId="monitordemo.commands.jobMonitorUsage"
+                  id="monitordemo.menus.jobMonitorUsage">
+            </command>
+            <command
+                  commandId="monitordemo.commands.jobMonitorUsageNoTaskName"
+                  id="monitordemo.menus.jobMonitorUsageNoTaskName">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
