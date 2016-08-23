@@ -10,22 +10,24 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class UseJobMonitorNoTaskName extends AbstractHandler {
+public class UseJobMonitorShow extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		new Job("Job") {
+		Job j = new Job("Job") {
 			
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
 				final long begin = System.currentTimeMillis();
-				System.out.println("UseJobMonitorNoTaskName Job Begin: " + begin);
+				System.out.println("UseJobMonitorShow Begin: " + begin);
 				int max = MonitorConstants.MAX;
 				SubMonitor convert = SubMonitor.convert(monitor, max);
 				int i = 0;
 				long result = 0;
 				while(i < max) {
+					convert.setTaskName(Integer.toString(i));
 					result += i;
 					i++;
 					convert.worked(1);
@@ -39,20 +41,24 @@ public class UseJobMonitorNoTaskName extends AbstractHandler {
 					@Override
 					public void run() {
 						long end = System.currentTimeMillis();
-						System.out.println("UseJobMonitorNoTaskName Msg Box Opens: " + end);
-						System.out.println("UseJobMonitorNoTaskName Time Until Msg Box Open: " + (end - begin));
+						System.out.println("   UseJobMonitorShow Msg Box Opens: " + end);
+						System.out.println("   UseJobMonitorShow Time Until Msg Box Open: " + (end - begin));
 						MessageDialog.openInformation(
 								window.getShell(),
 								"Result",
 								Long.toString(showMe));
 					}
+					
 				});
 				long end = System.currentTimeMillis();
-				System.out.println("UseJobMonitorNoTaskName runnable End: " + end);
-				System.out.println("UseJobMonitorNoTaskName runnable Duration: " + (end - begin));
+				System.out.println("UseJobMonitorShow End: " + end);
+				System.out.println("UseJobMonitorShow Duration: " + (end - begin));
 				return Status.OK_STATUS;
 			}
-		}.schedule();
+		};
+		j.schedule();
+		PlatformUI.getWorkbench().getProgressService().showInDialog(window.getShell(), j);
+
 		return null;
 	}
 }

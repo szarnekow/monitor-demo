@@ -21,7 +21,9 @@ public class NoMonitorUsage extends AbstractHandler {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException,
 						InterruptedException {
-					int max = 100000000;
+					final long begin = System.currentTimeMillis();
+					System.out.println("NoMonitorUsage runnable Begin: " + begin);
+					int max = MonitorConstants.MAX;
 					int i = 0;
 					long result = 0;
 					while(i < max) {
@@ -33,6 +35,9 @@ public class NoMonitorUsage extends AbstractHandler {
 
 						@Override
 						public void run() {
+							long e1 = System.currentTimeMillis();
+							System.out.println("UseMonitor opening msg box: " + e1);
+							System.out.println("UseMonitor time until msg box open: " + (e1 - begin));
 							MessageDialog.openInformation(
 									window.getShell(),
 									"Result",
@@ -40,6 +45,9 @@ public class NoMonitorUsage extends AbstractHandler {
 						}
 						
 					});
+					long end = System.currentTimeMillis();
+					System.out.println("NoMonitorUsage runnable End: " + end);
+					System.out.println("NoMonitorUsage runnable Duration: " + (end - begin));
 				}
 			});
 		} catch (InvocationTargetException e) {
