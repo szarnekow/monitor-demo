@@ -24,6 +24,14 @@
             name="With job monitor"
             id="monitordemo.commands.jobMonitorUsageNoTaskName">
       </command>
+      <command
+            name="Show With verbose job monitor"
+            id="monitordemo.commands.jobMonitorUsageShow">
+      </command>
+      <command
+            name="Show With job monitor"
+            id="monitordemo.commands.jobMonitorUsageNoTaskNameShow">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -46,6 +54,14 @@
       <handler
             commandId="monitordemo.commands.jobMonitorUsageNoTaskName"
             class="monitordemo.handlers.UseJobMonitorNoTaskName">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.jobMonitorUsageShow"
+            class="monitordemo.handlers.UseJobMonitorShow">
+      </handler>
+      <handler
+            commandId="monitordemo.commands.jobMonitorUsageNoTaskNameShow"
+            class="monitordemo.handlers.UseJobMonitorNoTaskNameShow">
       </handler>
    </extension>
    <extension
@@ -74,6 +90,14 @@
             <command
                   commandId="monitordemo.commands.jobMonitorUsageNoTaskName"
                   id="monitordemo.menus.jobMonitorUsageNoTaskName">
+            </command>
+            <command
+                  commandId="monitordemo.commands.jobMonitorUsage"
+                  id="monitordemo.menus.jobMonitorUsage">
+            </command>
+            <command
+                  commandId="monitordemo.commands.jobMonitorUsageNoTaskNameShow"
+                  id="monitordemo.menus.jobMonitorUsageNoTaskNameShow">
             </command>
          </menu>
       </menuContribution>

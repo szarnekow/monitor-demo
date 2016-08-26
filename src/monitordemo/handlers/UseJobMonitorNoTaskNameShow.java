@@ -10,17 +10,18 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class UseJobMonitorNoTaskName extends AbstractHandler {
+public class UseJobMonitorNoTaskNameShow extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		new Job("Job") {
+		Job j = new Job("Job") {
 			
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
 				final long begin = System.currentTimeMillis();
-				System.out.println("UseJobMonitorNoTaskName Job Begin: " + begin);
+				System.out.println("UseJobMonitorNoTaskNameShow Job Begin: " + begin);
 				int max = MonitorConstants.MAX;
 				SubMonitor convert = SubMonitor.convert(monitor, max);
 				int i = 0;
@@ -39,8 +40,8 @@ public class UseJobMonitorNoTaskName extends AbstractHandler {
 					@Override
 					public void run() {
 						long end = System.currentTimeMillis();
-						System.out.println("UseJobMonitorNoTaskName Msg Box Opens: " + end);
-						System.out.println("UseJobMonitorNoTaskName Time Until Msg Box Open: " + (end - begin));
+						System.out.println("UseJobMonitorNoTaskNameShow Msg Box Opens: " + end);
+						System.out.println("UseJobMonitorNoTaskNameShow Time Until Msg Box Open: " + (end - begin));
 						MessageDialog.openInformation(
 								window.getShell(),
 								"Result",
@@ -48,11 +49,14 @@ public class UseJobMonitorNoTaskName extends AbstractHandler {
 					}
 				});
 				long end = System.currentTimeMillis();
-				System.out.println("UseJobMonitorNoTaskName runnable End: " + end);
-				System.out.println("UseJobMonitorNoTaskName runnable Duration: " + (end - begin));
+				System.out.println("UseJobMonitorNoTaskNameShow runnable End: " + end);
+				System.out.println("UseJobMonitorNoTaskNameShow runnable Duration: " + (end - begin));
 				return Status.OK_STATUS;
 			}
-		}.schedule();
+		};
+		j.schedule();
+		PlatformUI.getWorkbench().getProgressService().showInDialog(window.getShell(), j);
 		return null;
 	}
+	
 }

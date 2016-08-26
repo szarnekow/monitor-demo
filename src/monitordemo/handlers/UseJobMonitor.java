@@ -19,7 +19,9 @@ public class UseJobMonitor extends AbstractHandler {
 			
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				int max = 100000000;
+				final long begin = System.currentTimeMillis();
+				System.out.println("UseJobMonitor Begin: " + begin);
+				int max = MonitorConstants.MAX;
 				SubMonitor convert = SubMonitor.convert(monitor, max);
 				int i = 0;
 				long result = 0;
@@ -37,6 +39,9 @@ public class UseJobMonitor extends AbstractHandler {
 
 					@Override
 					public void run() {
+						long end = System.currentTimeMillis();
+						System.out.println("   UseJobMonitor Msg Box Opens: " + end);
+						System.out.println("   UseJobMonitor Time Until Msg Box Open: " + (end - begin));
 						MessageDialog.openInformation(
 								window.getShell(),
 								"Result",
@@ -44,6 +49,9 @@ public class UseJobMonitor extends AbstractHandler {
 					}
 					
 				});
+				long end = System.currentTimeMillis();
+				System.out.println("UseJobMonitor End: " + end);
+				System.out.println("UseJobMonitor Duration: " + (end - begin));
 				return Status.OK_STATUS;
 			}
 		}.schedule();

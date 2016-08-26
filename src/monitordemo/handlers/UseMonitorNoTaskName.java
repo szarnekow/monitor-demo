@@ -22,7 +22,9 @@ public class UseMonitorNoTaskName extends AbstractHandler {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException,
 						InterruptedException {
-					int max = 100000000;
+					final long begin = System.currentTimeMillis();
+					System.out.println("UseMonitorNoTaskName runnable Begin: " + begin);
+					int max = MonitorConstants.MAX;
 					SubMonitor convert = SubMonitor.convert(monitor, max);
 					int i = 0;
 					long result = 0;
@@ -35,10 +37,15 @@ public class UseMonitorNoTaskName extends AbstractHandler {
 						}
 					}
 					final long showMe = result;
+
 					window.getShell().getDisplay().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
+							long e1 = System.currentTimeMillis();
+							System.out.println("UseMonitorNoTaskName opening msg box: " + e1);
+							System.out.println("UseMonitorNoTaskName time until msg box open: " + (e1 - begin));
+
 							MessageDialog.openInformation(
 									window.getShell(),
 									"Result",
@@ -46,6 +53,9 @@ public class UseMonitorNoTaskName extends AbstractHandler {
 						}
 						
 					});
+					long end = System.currentTimeMillis();
+					System.out.println("UseMonitorNoTaskName runnable End: " + end);
+					System.out.println("UseMonitorNoTaskName runnable Duration: " + (end - begin));
 				}
 			});
 		} catch (InvocationTargetException e) {
@@ -53,6 +63,7 @@ public class UseMonitorNoTaskName extends AbstractHandler {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 }
